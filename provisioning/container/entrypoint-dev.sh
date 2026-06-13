@@ -4,14 +4,14 @@
 set -e
 
 # Only installs the current lock file state.
-poetry install
+uv sync
 
 # This could collide if you happen to work on a migration yourself and you restart the container.
-poetry run /app/src/manage.py migrate --noinput
+uv run /app/src/manage.py migrate --noinput
 
 # Reset password.
-poetry run /app/src/manage.py dsmr_superuser
+uv run /app/src/manage.py dsmr_superuser
 
-# E.g. "poetry run /app/src/manage.py runserver 8000"
+# E.g. "uv run /app/src/manage.py runserver 8000"
 echo "Running: ${@}"
 exec ${@}

@@ -14,7 +14,7 @@ It exposes a web UI, REST API, and integrates with external services (MQTT, Infl
 | Language              | Python                                    |
 | Framework             | Django                                    |
 | API                   | Django REST Framework                     |
-| Dependency management | Poetry (`pyproject.toml` / `poetry.lock`) |
+| Dependency management | uv (`pyproject.toml` / `uv.lock`)          |
 | Formatter             | Black (120-char line length)              |
 | Template linter       | djlint                                    |
 | Type checker          | MyPy                                      |
@@ -57,8 +57,8 @@ It exposes a web UI, REST API, and integrates with external services (MQTT, Infl
 
 ### Formatting & Style
 - **Line length**: 120 characters (Black + Flake8 both configured to 120).
-- **Formatter**: Always run `poetry run black .` before committing.
-- **Template linter**: Run `poetry run djlint --reformat .` for HTML templates.
+- **Formatter**: Always run `uv run black .` before committing.
+- **Template linter**: Run `uv run djlint --reformat .` for HTML templates.
 - Do **not** manually wrap lines that Black will handle.
 
 ### Type Hints
@@ -77,13 +77,13 @@ It exposes a web UI, REST API, and integrates with external services (MQTT, Infl
 - Tests use **pytest** (not `unittest.TestCase` directly).
 - Fixture files live in `<app>/fixtures/`.
 - Test paths are declared in `pyproject.toml` — add new apps there.
-- Run with: `poetry run pytest -v`
+- Run with: `uv run pytest -v`
 - Parallelisation via `pytest-xdist` is available (`-n auto`).
 
 ### Migrations
-- Generate with: `poetry run /app/src/manage.py makemigrations`
-- Apply with: `poetry run /app/src/manage.py migrate`
-- Lock for release with: `poetry run /app/src/manage.py dsmrreader_lock_migrations`
+- Generate with: `uv run /app/src/manage.py makemigrations`
+- Apply with: `uv run /app/src/manage.py migrate`
+- Lock for release with: `uv run /app/src/manage.py dsmrreader_lock_migrations`
 - **Never edit locked migrations.**
 
 ### Environment / Configuration
@@ -113,11 +113,11 @@ Never modify, format, lint, or type-check these:
 ## Quality Pipeline (run in order)
 
 ```bash
-poetry run black .                          # 1. Format Python
-poetry run djlint --reformat .              # 2. Format templates
-poetry run mypy /app/src                    # 3. Type check
-poetry run flake8                           # 4. Lint
-poetry run pytest -v                        # 5. Test
+uv run black .                          # 1. Format Python
+uv run djlint --reformat .              # 2. Format templates
+uv run mypy /app/src                    # 3. Type check
+uv run flake8                           # 4. Lint
+uv run pytest -v                        # 5. Test
 ```
 
 All steps must pass before a change is considered complete. **Always run `/quality-check` after making any code changes.**

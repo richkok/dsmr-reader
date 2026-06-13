@@ -38,7 +38,7 @@
 - Containers built? See if this command works:
 
 ```shell title="shell"
-    docker exec -it dev-dsmr-app poetry run /app/src/manage.py check
+    docker exec -it dev-dsmr-app uv run /app/src/manage.py check
 
     # Expected output: "System check identified no issues (0 silenced)"
 ```
@@ -61,25 +61,25 @@ Any Python code changes you make will cause the Django Development Server to rel
 - Run ``makemessages`` to extract those strings:
 
 ```shell title="shell"
-docker compose exec dev-dsmr-app poetry run /app/src/manage.py makemessages -l nl
+docker compose exec dev-dsmr-app uv run /app/src/manage.py makemessages -l nl
 ```
  
 - Open ``dsmr_frontend/locale/en/LC_MESSAGES/django.po`` with PO Editor or a similar tool and translate the new strings.
 - After translation, run ``compilemessages`` to compile the PO-translations into the MO-files:
 
 ```shell title="shell"
-docker compose exec dev-dsmr-app poetry run /app/src/manage.py compilemessage
+docker compose exec dev-dsmr-app uv run /app/src/manage.py compilemessage
 ```
 
 ## Code style
 ```shell title="shell"
-docker compose exec dev-dsmr-app poetry run black .
-docker compose exec dev-dsmr-app poetry run flake8 -v
+docker compose exec dev-dsmr-app uv run black .
+docker compose exec dev-dsmr-app uv run flake8 -v
 ```
 
 ## Tests
 ```shell title="shell"
-docker compose exec -e DJANGO_SETTINGS_MODULE=dsmrreader.config.test dev-dsmr-app poetry run pytest
+docker compose exec -e DJANGO_SETTINGS_MODULE=dsmrreader.config.test dev-dsmr-app uv run pytest
 ```
 
 The `-e DJANGO_SETTINGS_MODULE=dsmrreader.config.test` part is important, as some tests may fail otherwise.

@@ -79,7 +79,7 @@ DSMR-reader would **not have been possible** without the following software and 
 
 ### Development tools
 
-- [Poetry](https://python-poetry.org/) — dependency management and packaging
+- [uv](https://docs.astral.sh/uv/) — dependency management and packaging
 - [Black](https://black.readthedocs.io/) — Python code formatter
 - [Flake8](https://flake8.pycqa.org/) — Python linter (with bandit and bugbear plugins)
 - [MyPy](https://mypy.readthedocs.io/) — static type checker

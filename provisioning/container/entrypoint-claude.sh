@@ -4,7 +4,7 @@
 set -e
 
 # Only installs the current lock file state.
-poetry install
+uv sync
 
 echo "Running: ${@}"
 exec ${@}

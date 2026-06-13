@@ -15,21 +15,18 @@ RUN pip install pip --upgrade
 
 
 FROM local-dsmrreader-base AS local-dsmrreader-dev
-# Credits to https://www.martinrichards.me/post/python_poetry_docker/
-# Also, the only reason for .venv is the IDE's detection
-ENV POETRY_VIRTUALENVS_CREATE=true \
-    POETRY_VIRTUALENVS_IN_PROJECT=true \
-    POETRY_VIRTUALENVS_PATH=/app/src/.venv \
+# The only reason for .venv is the IDE's detection
+ENV UV_PROJECT_ENVIRONMENT=/app/src/.venv \
     DJANGO_SETTINGS_MODULE=dsmrreader.config.development
 
-RUN pip install poetry
+RUN pip install uv
 
 # This cannot reside in /app as it will be mounted during development.
 COPY provisioning/container/entrypoint-dev.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["poetry", "run", "/app/src/manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["uv", "run", "/app/src/manage.py", "runserver", "0.0.0.0:8000"]
 
 
 
@@ -60,7 +57,7 @@ COPY provisioning/container/entrypoint-claude.sh /entrypoint.sh
 
 WORKDIR /app/src
 
-CMD ["poetry", "run", "/app/src/manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["uv", "run", "/app/src/manage.py", "runserver", "0.0.0.0:8000"]
 ENTRYPOINT ["/entrypoint.sh"]
 
 
